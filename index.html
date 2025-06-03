@@ -124,17 +124,19 @@
       showGameScreen();
     };
 
-    document.getElementById("joinGame").onclick = () => {
-      gameId = document.getElementById("gameCode").value.trim();
-      playerName = document.getElementById("playerName").value.trim();
-      if (!playerName || !gameId) {
-        alert("Bitte gib sowohl Name als auch Spielcode ein!");
-        return;
-      }
-      set(ref(db, `games/${gameId}/players/${playerName}`), "waiting");
-      listenForWord();
-      showGameScreen(false);
-    };
+document.getElementById("joinGame").onclick = () => {
+  gameId = document.getElementById("gameCode").value.trim();
+  playerName = document.getElementById("playerName").value.trim();
+  if (!playerName || !gameId) {
+    alert("Bitte gib sowohl Name als auch Spielcode ein!");
+    return;
+  }
+  set(ref(db, `games/${gameId}/players/${playerName}`), "waiting");
+  listenForPlayers();
+  listenForWord();
+  showGameScreen(false);
+};
+
 
     document.getElementById("startGame").onclick = async () => {
       const snapshot = await fetch(`https://imposter-theo-default-rtdb.europe-west1.firebasedatabase.app/games/${gameId}/players.json`)
